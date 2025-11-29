@@ -1,85 +1,70 @@
-# LLM-Guided Spatial Reasoning & Navigation Agent  
-### Coding Sample Overview
+# LLM-Augmented Navigation Agent: `SentinelMeetingAgent` & `Reasoner`
 
-This code implements an intelligent navigation agent in a simulated urban environment.  
-The agent must reach a target location while avoiding patrolling guards (“sentinels”), interpreting images, and refining routes in real time. The system consists of two tightly-connected modules:
+This coding sample implements an LLM-guided navigation system in a simulated urban environment.  
+The agent can interpret aerial images, build a semantic scene graph, avoid patrolling sentinels, and navigate safely to the meeting location.
 
 ---
 
-## 1. Reasoner (LLM-based High-Level Module)
+## System Overview
 
-**Goal:** Provide *semantic understanding* and *global reasoning*.
+### Reasoner (ThinkingModule)
 
-### Key Capabilities
-- **Scene Graph Construction**  
-  - Reconstructs a Hybrid Scene Graph (HSG) from:
-    - Aerial images  
-    - Conversation excerpts  
-  - Uses an LLM to output structured JSON describing objects, relations, and connectivity.
+Reasoner
+├─ Maintains global Hybrid Scene Graph (HSG)
+├─ Uses LLM prompts for:
+│ ├─ Action planning
+│ ├─ Scene-graph reconstruction from language
+│ └─ Safe-path proposal & route refinement (vision + text)
+└─ Validates routes against sentinel locations
 
-- **Safe Path Planning**  
-  - Serializes the current scene graph and asks the LLM to propose a safe symbolic route.
-  - If information is missing, the LLM identifies what should be queried next.
+### SentinelMeetingAgent (BaseNavigationMeetingAgent)
 
-- **Route Refinement (with image)**  
-  - Receives a grid-map image and last route.
-  - Uses an LLM (vision + text) to refine waypoints around sentinel positions.
+SentinelMeetingAgent
+├─ Processes simulator observations and app events
+├─ Tracks sentinel poses and emergency states
+├─ Requests aerial grid-map images & refined routes
+└─ Executes navigation or emergency avoidance via occupancy maps
+
+
+---
+
+## Reasoner: LLM-Based Spatial Reasoning
+
+- **Action Planning**  
+  Generates high-level decisions using prompts filled with current time, position, and intent.
+
+- **Scene-Graph Construction (HSG)**  
+  - From conversation: reconstructs semantic nodes, relations, and properties.  
+  - From aerial images: extracts subgraphs and merges them into a global scene graph.
+
+- **Safe-Path Proposal**  
+  Serializes the current HSG and queries the LLM for a safe symbolic path, identifying missing information when needed.
+
+- **Route Refinement (Image + Text)**  
+  Combines last route, sentinel positions, and grid-map images to request refined waypoints from the LLM.
 
 - **Robust JSON Parsing**  
-  - Automatically re-prompts the LLM if output formatting is incorrect.
-
-This module focuses on **global reasoning, multimodal prompting, and structured planning**.
+  Handles malformed LLM outputs through automatic re-prompting and recovery.
 
 ---
 
-## 2. SentinelMeetingAgent (Embodied Navigation Module)
+## SentinelMeetingAgent: Embodied Navigation & Emergency Handling
 
-**Goal:** Execute movement safely and efficiently inside the simulator.
+- **Observation Processing**  
+  Updates internal states based on visible sentinels, app messages, and action outcomes.
 
-### Responsibilities
-- **Observation Processing**
-  - Tracks sentinel visibility and updates risk level.
-  - Receives aerial images or refined routes from the in-simulation “app”.
+- **Emergency Detection & Avoidance**  
+  When a sentinel is near, enters emergency mode and samples safe positions using occupancy-grid validation and probabilistic scoring.
 
-- **Emergency Handling**
-  - Detects sentinel proximity and switches to an avoidance mode.
-  - Performs short-range motion planning using an occupancy grid:
-    - Validates positions  
-    - Scores candidate locations  
-    - Selects safe points probabilistically  
+- **Route Refinement Triggering**  
+  When danger overlaps with the current route or progress stalls, the agent:  
+  1. Requests an aerial grid-map image  
+  2. Passes it to the Reasoner for waypoint refinement  
+  3. Requests the app to compile an executable refined route
 
-- **Route Refinement Triggering**
-  - Requests new aerial images or refined routes when:
-    - Current path intersects danger  
-    - The agent gets stuck  
-    - Post-emergency recovery indicates deviation  
-
-- **Task Execution**
-  - Discussion mode (LLM-generated plan)  
-  - Navigation mode (city-level route following)  
-  - Task completion when arrival is detected  
-
-This module focuses on **perception, safety control, and real-time decision making**.
+- **Normal Navigation**  
+  Performs LLM-guided discussion planning or city-level navigation until reaching the meeting place.
 
 ---
 
-## 3. What This Coding Sample Demonstrates
-
-- Integration of **LLM reasoning** with a **physical agent**  
-- Real-time **scene-graph construction** from vision + language  
-- Automatic **safe-path planning** combining LLM and classical spatial algorithms  
-- Practical **error-handling**, robust JSON parsing, and fallback strategies  
-- A clean separation between:
-  - *Reasoning* (symbolic, LLM-driven)  
-  - *Acting* (navigation, motion planning)  
-
----
-
-## 4. Summary
-
-The code presents a compact but complete pipeline for LLM-augmented embodied navigation:
-- The **Reasoner** thinks globally  
-- The **Agent** acts locally and safely  
-
-This showcases skills in multimodal LLM use, agent design, graph reasoning, and robotics-style navigation—suitable for demonstrating strong coding and system-engineering ability in a graduate application.
-
+This README provides a concise overview of the LLM-driven reasoning and embodied navigation logic implemented in this coding sample.
