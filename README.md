@@ -12,9 +12,9 @@ The agent can interpret aerial images, build a semantic scene graph, avoid patro
 Reasoner  
 R1. Maintains global Hybrid Scene Graph (HSG)  
 R2. Uses LLM prompts for:  
-&nbsp;&nbsp;R2.a Action planning  
-&nbsp;&nbsp;R2.b Scene-graph reconstruction from language  
-&nbsp;&nbsp;R2.c Safe-path proposal & route refinement (vision + text)  
+&nbsp;&nbsp;&nbsp;&nbsp;a Action planning  
+&nbsp;&nbsp;&nbsp;&nbsp;b Scene-graph reconstruction from language  
+&nbsp;&nbsp;&nbsp;&nbsp;c Safe-path proposal & route refinement (vision + text)  
 R3. Validates routes against sentinel locations  
 
 ### SentinelMeetingAgent (BaseNavigationMeetingAgent)
