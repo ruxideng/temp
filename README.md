@@ -1,4 +1,4 @@
-# LLM-Augmented Navigation Agent: `SentinelMeetingAgent` & `Reasoner`
+# LLM-Augmented Navigation Agent: `Reasoner` & `SentinelMeetingAgent`
 
 This coding sample implements an LLM-guided navigation system in a simulated urban environment.  
 The agent can interpret aerial images, build a semantic scene graph, avoid patrolling sentinels, and navigate safely to the meeting location.
@@ -64,5 +64,3 @@ SentinelMeetingAgent
 
 - **Normal Navigation**  
   Performs LLM-guided discussion planning or city-level navigation until reaching the meeting place.
-
----
