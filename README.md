@@ -9,21 +9,21 @@ The agent can interpret aerial images, build a semantic scene graph, avoid patro
 
 ### Reasoner (ThinkingModule)
 
-Reasoner
-├─ Maintains global Hybrid Scene Graph (HSG)
-├─ Uses LLM prompts for:
-│ ├─ Action planning
-│ ├─ Scene-graph reconstruction from language
-│ └─ Safe-path proposal & route refinement (vision + text)
-└─ Validates routes against sentinel locations
+Reasoner  
+├─ Maintains global Hybrid Scene Graph (HSG)  
+├─ Uses LLM prompts for:  
+│ ├─ Action planning  
+│ ├─ Scene-graph reconstruction from language  
+│ └─ Safe-path proposal & route refinement (vision + text)  
+└─ Validates routes against sentinel locations  
 
 ### SentinelMeetingAgent (BaseNavigationMeetingAgent)
 
-SentinelMeetingAgent
-├─ Processes simulator observations and app events
-├─ Tracks sentinel poses and emergency states
-├─ Requests aerial grid-map images & refined routes
-└─ Executes navigation or emergency avoidance via occupancy maps
+SentinelMeetingAgent  
+├─ Processes simulator observations and app events  
+├─ Tracks sentinel poses and emergency states  
+├─ Requests aerial grid-map images & refined routes  
+└─ Executes navigation or emergency avoidance via occupancy maps  
 
 
 ---
