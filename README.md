@@ -5,7 +5,7 @@ The agent can interpret aerial images, build a semantic scene graph, avoid patro
 
 ---
 
-## System Overview
+## Overview
 
 ### Reasoner (ThinkingModule)
 
@@ -66,5 +66,3 @@ SentinelMeetingAgent
   Performs LLM-guided discussion planning or city-level navigation until reaching the meeting place.
 
 ---
-
-This README provides a concise overview of the LLM-driven reasoning and embodied navigation logic implemented in this coding sample.
